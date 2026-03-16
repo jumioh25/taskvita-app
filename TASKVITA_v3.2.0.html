@@ -338,12 +338,13 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
    CARD VIEW
 ════════════════════════════════════ */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.task-card-wrap{perspective:1000px;height:160px;cursor:pointer}
+.task-card-wrap{perspective:1000px;height:170px;cursor:pointer;transition:transform .2s}
+.task-card-wrap:hover{transform:translateY(-3px)}
 .task-card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
 .task-card-wrap.flipped .task-card-inner{transform:rotateY(180deg)}
-.task-card-front,.task-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;border:1px solid var(--border);background:var(--panel);display:flex;flex-direction:column;gap:8px}
+.task-card-front,.task-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;border:1px solid var(--border);background:var(--panel);display:flex;flex-direction:column;gap:8px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .task-card-back{transform:rotateY(180deg);background:var(--bg2)}
-.task-card-front:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.task-card-front:hover{border-color:var(--border2);box-shadow:0 8px 28px rgba(0,0,0,.25)}
 .card-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;flex:1}
 .card-title.done-txt{text-decoration:line-through;opacity:.5}
 .card-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
@@ -352,11 +353,33 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 .card-back-title{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px}
 .card-back-notes{font-size:11px;color:var(--text2);flex:1;overflow:hidden;line-height:1.5;opacity:.8}
 .card-back-actions{display:flex;gap:5px;margin-top:auto}
-.card-act{flex:1;padding:5px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:10px;cursor:pointer;text-align:center;transition:all .15s}
+.card-act{flex:1;padding:5px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:10px;cursor:pointer;text-align:center;transition:all .15s}
 .card-act:hover{border-color:var(--accent);color:var(--accent)}
 .card-act.done-act{border-color:var(--accent);color:var(--accent)}
-.card-check{position:absolute;top:10px;right:10px;width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s}
+.card-check{position:absolute;top:10px;right:10px;width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s}
 .task-card-wrap.card-done .card-check{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+
+/* ── Card Zoom Modal ── */
+.card-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:20px}
+.card-zoom-overlay.open{display:flex;animation:fadeIn .2s ease}
+.card-zoom-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:18px;width:min(480px,92vw);max-height:85vh;overflow-y:auto;padding:24px;box-shadow:0 32px 80px rgba(0,0,0,.5);animation:zoomIn .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes zoomIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.czm-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.czm-title{font-size:16px;font-weight:700;color:var(--text);line-height:1.4;flex:1}
+.czm-close{background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text3);font-size:14px;flex-shrink:0;transition:all .15s}
+.czm-close:hover{border-color:var(--danger);color:var(--danger)}
+.czm-section{margin-bottom:14px}
+.czm-label{font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--text3);font-weight:600;margin-bottom:8px}
+.czm-subtask{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:var(--panel);border:1px solid var(--border);margin-bottom:4px;font-size:12px;color:var(--text2)}
+.czm-subtask.done{text-decoration:line-through;opacity:.5}
+.czm-notes{font-size:12px;color:var(--text2);line-height:1.6;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.czm-badges{display:flex;gap:6px;flex-wrap:wrap}
+.czm-actions{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.czm-btn{flex:1;padding:9px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .15s;font-weight:500}
+.czm-btn:hover{border-color:var(--accent);color:var(--accent)}
+.czm-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:700}
+.czm-btn.primary:hover{opacity:.9}
 
 /* ════════════════════════════════════
    KANBAN
@@ -618,6 +641,7 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   body.focus-mode header{display:flex!important}
   body.focus-mode .ham-btn{display:flex!important}
   body.focus-mode aside{display:none}
+  body.focus-mode aside.mob-open{display:flex!important}
   body.focus-mode .app{grid-template-columns:1fr}
   body.focus-mode main{padding:8px 10px}
   /* Misc */
@@ -725,7 +749,7 @@ footer span{color:var(--accent)}
           <span class="mob-swatch" style="background:#4a8a50" onclick="setTheme('sage');closeMobileSidebar()" title="Sage"></span>
         </div>
       </div>
-      <button class="mob-action-btn" id="mob-focus-btn" onclick="toggleFocus();closeMobileSidebar()">☯ Modo Foco</button>
+      <button class="mob-action-btn" id="mob-focus-btn" onclick="toggleFocusMobile()">☯ Modo Foco</button>
       <button class="mob-action-btn" onclick="exportData();closeMobileSidebar()">↓ Exportar</button>
       <button class="mob-action-btn" onclick="document.getElementById('importFile').click();closeMobileSidebar()">↑ Importar</button>
       <button class="mob-action-btn" onclick="toggleFullscreen();closeMobileSidebar()">⛶ Pantalla completa</button>
@@ -1053,6 +1077,21 @@ footer span{color:var(--accent)}
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="">
   <div class="lightbox-name" id="lightbox-name"></div>
+</div>
+
+<div class="card-zoom-overlay" id="card-zoom-overlay" onclick="if(event.target===this)closeCardZoom()">
+  <div class="card-zoom-modal" id="card-zoom-modal">
+    <div class="czm-header">
+      <div class="czm-title" id="czm-title"></div>
+      <button class="czm-close" onclick="closeCardZoom()">✕</button>
+    </div>
+    <div id="czm-body"></div>
+    <div class="czm-actions">
+      <button class="czm-btn" onclick="closeCardZoom()">Cerrar</button>
+      <button class="czm-btn" id="czm-expand-btn">☰ Ver en lista</button>
+      <button class="czm-btn primary" id="czm-done-btn">✓ Completar</button>
+    </div>
+  </div>
 </div>
 
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
@@ -1519,6 +1558,73 @@ async function updateStorageIndicator(){
 
 
 // ════════════════════════════════════════
+//  CARD ZOOM — doble clic/tap
+// ════════════════════════════════════════
+let lastTap=0;
+function handleCardTap(id,e){
+  const now=Date.now();
+  if(now-lastTap<300){
+    // Double tap — zoom
+    openCardZoom(id);
+    e.preventDefault();
+  } else {
+    // Single tap — flip
+    const wrap=e.currentTarget;
+    if(wrap)wrap.classList.toggle('flipped');
+  }
+  lastTap=now;
+}
+function openCardZoom(id){
+  const d=loadData();
+  const t=d.tasks.find(x=>x.id===id);if(!t)return;
+  const proj=t.project?d.projects.find(p=>p.id===t.project):null;
+  document.getElementById('czm-title').textContent=t.text;
+  // Build body
+  let html='';
+  // Badges
+  const badges=[];
+  if(proj)badges.push(`<span class="tproj" style="background:${proj.color}22;color:${proj.color}">${esc(proj.name)}</span>`);
+  if(t.due)badges.push(`<span class="tdue ${isOverdue(t)?'overdue':isSoon(t)?'soon':''}">${t.due}</span>`);
+  if(badges.length)html+=`<div class="czm-section"><div class="czm-badges">${badges.join('')}</div></div>`;
+  // Subtasks
+  if(t.subtasks&&t.subtasks.length){
+    html+=`<div class="czm-section"><div class="czm-label">Subtareas ${t.subtasks.filter(s=>s.done).length}/${t.subtasks.length}</div>`;
+    t.subtasks.forEach(s=>{html+=`<div class="czm-subtask${s.done?' done':''}">${s.done?'✓':'○'} ${esc(s.text)}</div>`;});
+    html+=`</div>`;
+  }
+  // Notes
+  if(t.notes)html+=`<div class="czm-section"><div class="czm-label">Notas</div><div class="czm-notes">${esc(t.notes)}</div></div>`;
+  // Tags
+  if(t.tags&&t.tags.length){
+    html+=`<div class="czm-section"><div class="czm-label">Tags</div><div class="czm-badges">`;
+    t.tags.forEach(tag=>{html+=`<span class="tag-badge">#${esc(tag)}</span>`;});
+    html+=`</div></div>`;
+  }
+  // Provider
+  if(t.provider&&t.provider.name){
+    html+=`<div class="czm-section"><div class="czm-label">Proveedor</div>
+    <div class="czm-notes">👤 ${esc(t.provider.name)}${t.provider.phone?` · 📞 ${esc(t.provider.phone)}`:''}</div></div>`;
+  }
+  document.getElementById('czm-body').innerHTML=html||'<p style="color:var(--text3);font-size:12px">Sin detalles adicionales.</p>';
+  // Actions
+  const doneBtn=document.getElementById('czm-done-btn');
+  doneBtn.textContent=t.done?'↩ Reabrir':'✓ Completar';
+  doneBtn.onclick=()=>{toggleTask(id);closeCardZoom();};
+  document.getElementById('czm-expand-btn').onclick=()=>{closeCardZoom();showPage('todas');};
+  // Open
+  document.getElementById('card-zoom-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCardZoom(){
+  document.getElementById('card-zoom-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+// Close on Escape
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeCardZoom();
+});
+
+// ════════════════════════════════════════
 //  MOBILE SIDEBAR
 // ════════════════════════════════════════
 function toggleMobileSidebar(){
@@ -1680,6 +1786,17 @@ function setTheme(name,el){
   document.getElementById('theme-menu').classList.remove('open');
 }
 function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>toast('⚠ Pantalla completa no disponible','warn'));else document.exitFullscreen();}
+function toggleFocusMobile(){
+  const isActive=document.body.classList.contains('focus-mode');
+  if(isActive){
+    // Salir del foco — cerrar sidebar también
+    toggleFocus();
+    closeMobileSidebar();
+  } else {
+    // Entrar al foco — NO cerrar sidebar, dejar visible para poder salir
+    toggleFocus();
+  }
+}
 function toggleFocus(){
   const isActive=document.body.classList.toggle('focus-mode');
   const btn=document.getElementById('focus-btn');
@@ -1948,7 +2065,13 @@ function makeCard(t,d){
   const wrap=document.createElement('div');
   wrap.className='task-card-wrap'+(t.done?' card-done':'');
   wrap.dataset.id=t.id;
-  wrap.onclick=function(e){if(!e.target.closest('button'))this.classList.toggle('flipped');};
+  // Single click = flip, double click/tap = zoom
+  wrap.onclick=function(e){
+    if(!e.target.closest('button'))handleCardTap(t.id,e);
+  };
+  wrap.ondblclick=function(e){
+    if(!e.target.closest('button')){e.preventDefault();openCardZoom(t.id);}
+  };
   let dueStr='';
   if(t.due){const dd=new Date(t.due+'T00:00:00');dueStr=dd.toLocaleDateString('es',{day:'numeric',month:'short'});}
   const tags=(t.tags||[]).map(tg=>`<span class="tag-badge">#${esc(tg)}</span>`).join('');
