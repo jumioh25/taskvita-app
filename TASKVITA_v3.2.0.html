@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>TASKVITA v3.2.0 — Responsive & Mobile</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231a1a2e'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='18' font-family='Arial Black,sans-serif' font-weight='900' fill='%2300e5a0'>T</text><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='18' font-family='Arial Black,sans-serif' font-weight='900' fill='%2300e5a0'>&#xFEFF;</text></svg>">
+<link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231a1a2e'/><text x='16' y='22' text-anchor='middle' font-size='20' font-family='Arial Black' font-weight='900' fill='%2300e5a0'>T</text></svg>">
 
 <!-- SortableJS for drag & drop (touch-friendly) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
@@ -71,7 +73,7 @@ a{color:var(--accent);text-decoration:none}
    HEADER
 ════════════════════════════════════ */
 header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 14px;height:50px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px;transition:background .3s;position:sticky;top:0;z-index:50}
-.logo{display:flex;align-items:baseline;gap:1px;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:4px;flex-shrink:0;flex-wrap:nowrap}
 .logo-task{font-size:15px;font-weight:600;color:var(--text)}
 .logo-vita{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--accent);text-shadow:0 0 14px var(--accentglow);letter-spacing:-0.5px}
 .logo-tag{font-size:9px;color:var(--text3);margin-left:6px;letter-spacing:1px}
@@ -628,7 +630,8 @@ body.focus-mode main{max-width:700px;margin:0 auto}
 }
 /* ════════════════════════════════════════
    TOAST + EMPTY
-════════════════════════════════════════ */;right:20px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:10px 16px;font-size:12px;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;max-width:320px;display:flex;align-items:center;gap:8px}
+════════════════════════════════════════ */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:10px 16px;font-size:12px;color:var(--text);box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;max-width:320px;display:flex;align-items:center;gap:8px}
 .toast.show{opacity:1;transform:none}
 .toast-icon{font-size:15px}
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:10px;color:var(--text3)}
@@ -653,11 +656,11 @@ footer span{color:var(--accent)}
   <button class="ham-btn" onclick="toggleMobileSidebar()" aria-label="Menú">
     <div class="ham-line"></div><div class="ham-line"></div><div class="ham-line"></div>
   </button>
-  <div class="logo" id="logo-wrap" title="Doble tap = pantalla completa">
+  <div class="logo" id="logo-wrap">
     <span class="logo-task">TASK</span><span class="logo-vita">VITA</span>
     <span class="logo-tag">Responsive & Mobile</span>
+    <button class="ver-badge" onclick="openVersionPanel()">📦 v3.2.0</button>
   </div>
-  <button class="ver-badge" onclick="openVersionPanel()">📦 v3.2.0</button>
 
   <div class="gsearch">
     <span class="gsearch-icon">🔍</span>
@@ -1047,7 +1050,8 @@ footer span{color:var(--accent)}
 </div>
 
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
-<button class="fab" id="fab-btn" onclick="focusAddTask()" title="Nueva tarea">＋</button><span class="toast-icon" id="toast-ico"></span><span id="toast-msg"></span></div>
+<button class="fab" id="fab-btn" onclick="focusAddTask()" title="Nueva tarea">＋</button>
+<div class="toast" id="toast"><span class="toast-icon" id="toast-ico"></span><span id="toast-msg"></span></div>
 
 <script>
 'use strict';
@@ -2392,14 +2396,27 @@ async function savePhoto(){
 // ════════════════════════════════════════
 function toggleExpand(id){
   const el=document.getElementById('exp-'+id),arr=document.getElementById('arr-'+id);
-  if(!el)return;const open=el.classList.toggle('open');
+  if(!el)return;
+  const open=el.classList.toggle('open');
   if(arr)arr.classList.toggle('open',open);
   if(open){
-    // Re-render refs so they show properly
     const d=loadData();const t=d.tasks.find(x=>x.id===id);
     if(t)renderRefs(t,document.getElementById('task-'+id));
   }
 }
+// Fix expand on mobile — ensure titem-main clicks work
+document.addEventListener('DOMContentLoaded',()=>{
+  document.body.addEventListener('click',function(e){
+    const main=e.target.closest('.titem-main');
+    if(main&&!e.target.closest('button')&&!e.target.closest('input')&&!e.target.closest('.tchk')){
+      const titem=main.closest('.titem');
+      if(titem){
+        const id=titem.dataset.id;
+        if(id)toggleExpand(id);
+      }
+    }
+  });
+});
 function startEditTask(id){
   const span=document.getElementById('ttxt-'+id);if(!span)return;
   const d=loadData();const t=d.tasks.find(x=>x.id===id);if(!t)return;
