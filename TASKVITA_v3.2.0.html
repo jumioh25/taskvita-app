@@ -121,6 +121,8 @@ aside{background:var(--bg3);border-right:1px solid var(--border);padding:10px 8p
 .add-proj-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text3);border:1px dashed var(--border);background:transparent;width:100%;transition:all .15s;margin-top:4px}
 .add-proj-btn:hover{color:var(--accent);border-color:var(--accent)}
 .sidebar-bottom{margin-top:auto;padding-top:10px;border-top:1px solid var(--border)}
+.mob-action-btn{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text2);font-size:12px;cursor:pointer;text-align:left;width:100%;transition:all .15s}
+.mob-action-btn:hover{border-color:var(--accent);color:var(--accent)}
 main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
 .page{display:none;flex-direction:column;gap:12px}.page.active{display:flex}
 .phead{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -566,6 +568,10 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   .gsearch{max-width:130px;padding:4px 8px}
   .hbtns .hbtn-export,.hbtns .hbtn-import,.hbtns .hbtn-fullscreen,.hbtns .focus-btn{display:none!important}
   .ham-btn{display:flex}
+  /* Header — ocultar botones secundarios, evitar overflow */
+  .hbtn-focus,.hbtn-export,.hbtn-import,.hbtn-fullscreen{display:none!important}
+  .hbtns{gap:4px;overflow:hidden}
+  header{overflow:hidden}
   aside{position:fixed;left:-100%;top:0;height:100vh;z-index:100;width:240px;box-shadow:4px 0 24px rgba(0,0,0,.3);transition:left .25s cubic-bezier(.4,0,.2,1);padding-top:50px}
   aside.mob-open{left:0}
   .sidebar-overlay{display:block}
@@ -586,18 +592,30 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   .card-grid{grid-template-columns:1fr!important}
   .titem-main{gap:6px;padding:9px 10px}
   .ttxt{font-size:13px}
+  /* Modal desde abajo */
   .modal{width:100vw;max-width:100vw;border-radius:16px 16px 0 0;position:fixed;bottom:0;left:0;margin:0;max-height:88vh;overflow-y:auto}
   .overlay{align-items:flex-end;padding:0}
+  /* Kanban scroll horizontal */
   .kanban-board{display:flex;overflow-x:auto;gap:10px;padding-bottom:72px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .kanban-board::-webkit-scrollbar{display:none}
   .kanban-col{min-width:275px;flex-shrink:0}
+  /* Inputs — evitar zoom iOS */
   input,select,textarea{font-size:16px!important}
+  /* Modo foco mobile */
+  body.focus-mode header{display:flex!important}
+  body.focus-mode .ham-btn{display:flex!important}
+  body.focus-mode aside{display:none}
+  body.focus-mode .app{grid-template-columns:1fr}
+  body.focus-mode main{padding:8px 10px}
+  /* Misc */
   .phead{flex-direction:column;gap:4px;margin-bottom:4px}
   .phead h2{font-size:17px}
   footer{padding:6px 12px;font-size:10px}
   .srow{flex-direction:column;align-items:flex-start;gap:5px}
   .ssect{padding:10px}
   .empty-state{padding:20px 16px}
+  /* Acciones en sidebar mobile */
+  .mob-actions{display:flex}
 }
 @media(max-width:360px){
   .gsearch{display:none}
@@ -630,6 +648,7 @@ footer span{color:var(--accent)}
   <button class="ham-btn" onclick="toggleMobileSidebar()" aria-label="Menú">
     <div class="ham-line"></div><div class="ham-line"></div><div class="ham-line"></div>
   </button>
+  <!-- Mobile quick actions (visible solo en mobile dentro del sidebar) -->
     <span class="logo-task">TASK</span><span class="logo-vita">VITA</span>
     <span class="logo-tag">Cerebro Local</span>
   </div>
@@ -655,10 +674,10 @@ footer span{color:var(--accent)}
         <div class="theme-opt" onclick="setTheme('sage',this)"><span class="theme-swatch" style="background:#4a8a50"></span>Sage</div>
       </div>
     </div>
-    <button class="hbtn" onclick="toggleFocus()" id="focus-btn" title="Modo Foco">☯ Foco</button>
-    <button class="hbtn" onclick="exportData()">↓ Exportar</button>
-    <button class="hbtn" onclick="document.getElementById('importFile').click()">↑ Importar</button>
-    <button class="hbtn" onclick="toggleFullscreen()" title="Pantalla completa">⛶</button>
+    <button class="hbtn hbtn-focus" onclick="toggleFocus()" id="focus-btn" title="Modo Foco">☯ Foco</button>
+    <button class="hbtn hbtn-export" onclick="exportData()">↓ Exportar</button>
+    <button class="hbtn hbtn-import" onclick="document.getElementById('importFile').click()">↑ Importar</button>
+    <button class="hbtn hbtn-fullscreen" onclick="toggleFullscreen()" title="Pantalla completa">⛶</button>
     <input type="file" id="importFile" accept=".json" onchange="importData(event)">
     <input type="file" id="importXlsxFile" accept=".xlsx,.xls,.csv" onchange="importExcelTemplate(event)">
   </div>
@@ -678,6 +697,12 @@ footer span{color:var(--accent)}
   <div id="proj-nav"></div>
   <button class="add-proj-btn" onclick="openProjModal()">+ Nuevo proyecto</button>
   <div class="sidebar-bottom">
+    <!-- Acciones mobile — solo visibles en pantallas pequeñas -->
+    <div class="mob-actions">
+      <button class="mob-action-btn" onclick="toggleFocus();closeMobileSidebar()">☯ Modo Foco</button>
+      <button class="mob-action-btn" onclick="exportData();closeMobileSidebar()">↓ Exportar</button>
+      <button class="mob-action-btn" onclick="document.getElementById('importFile').click();closeMobileSidebar()">↑ Importar</button>
+    </div>
     <div class="nitem" onclick="showPage('ajustes',this)"><span class="ico">⚙</span>Ajustes</div>
   </div>
 </aside>
