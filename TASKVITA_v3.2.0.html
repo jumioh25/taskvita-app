@@ -28,7 +28,7 @@
 ════════════════════════════════════ */
 *{box-sizing:border-box;margin:0;padding:0}
 html{height:100%}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background .3s,color .3s}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
@@ -121,8 +121,14 @@ aside{background:var(--bg3);border-right:1px solid var(--border);padding:10px 8p
 .add-proj-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text3);border:1px dashed var(--border);background:transparent;width:100%;transition:all .15s;margin-top:4px}
 .add-proj-btn:hover{color:var(--accent);border-color:var(--accent)}
 .sidebar-bottom{margin-top:auto;padding-top:10px;border-top:1px solid var(--border)}
+.mob-actions{display:none;flex-direction:column;gap:4px;padding:8px 0;border-top:1px solid var(--border);margin-top:8px}
 .mob-action-btn{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text2);font-size:12px;cursor:pointer;text-align:left;width:100%;transition:all .15s}
 .mob-action-btn:hover{border-color:var(--accent);color:var(--accent)}
+.mob-theme-row{display:flex;align-items:center;gap:8px;padding:6px 2px}
+.mob-action-label{font-size:11px;color:var(--text3);flex-shrink:0}
+.mob-theme-swatches{display:flex;gap:7px;flex-wrap:wrap}
+.mob-swatch{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;display:block;flex-shrink:0}
+.mob-swatch:active{transform:scale(1.25);border-color:var(--text)}
 main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
 .page{display:none;flex-direction:column;gap:12px}.page.active{display:flex}
 .phead{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -347,7 +353,7 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 /* ════════════════════════════════════
    KANBAN
 ════════════════════════════════════ */
-.kanban-board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;height:calc(100vh - 240px);overflow:hidden}
+.kanban-board{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;height:calc(100dvh - 240px);overflow:hidden}
 .kanban-col{background:var(--bg3);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
 .kanban-col-header{padding:12px 14px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .kanban-col-title{display:flex;align-items:center;gap:8px}
@@ -569,7 +575,7 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   .hbtns .hbtn-export,.hbtns .hbtn-import,.hbtns .hbtn-fullscreen,.hbtns .focus-btn{display:none!important}
   .ham-btn{display:flex}
   /* Header — ocultar botones secundarios, evitar overflow */
-  .hbtn-focus,.hbtn-export,.hbtn-import,.hbtn-fullscreen{display:none!important}
+  .hbtn-focus,.hbtn-export,.hbtn-import,.hbtn-fullscreen,.theme-wrap{display:none!important}
   .hbtns{gap:4px;overflow:hidden}
   header{overflow:hidden}
   aside{position:fixed;left:-100%;top:0;height:100vh;z-index:100;width:240px;box-shadow:4px 0 24px rgba(0,0,0,.3);transition:left .25s cubic-bezier(.4,0,.2,1);padding-top:50px}
@@ -648,9 +654,9 @@ footer span{color:var(--accent)}
   <button class="ham-btn" onclick="toggleMobileSidebar()" aria-label="Menú">
     <div class="ham-line"></div><div class="ham-line"></div><div class="ham-line"></div>
   </button>
-  <!-- Mobile quick actions (visible solo en mobile dentro del sidebar) -->
+  <div class="logo" id="logo-wrap" title="Doble tap = pantalla completa">
     <span class="logo-task">TASK</span><span class="logo-vita">VITA</span>
-    <span class="logo-tag">Cerebro Local</span>
+    <span class="logo-tag">Responsive & Mobile</span>
   </div>
   <button class="ver-badge" onclick="openVersionPanel()">📦 v3.2.0</button>
 
@@ -699,9 +705,22 @@ footer span{color:var(--accent)}
   <div class="sidebar-bottom">
     <!-- Acciones mobile — solo visibles en pantallas pequeñas -->
     <div class="mob-actions">
+      <!-- Selector de tema mobile -->
+      <div class="mob-theme-row">
+        <span class="mob-action-label">🎨 Tema</span>
+        <div class="mob-theme-swatches">
+          <span class="mob-swatch" style="background:#00e5a0" onclick="setTheme('vitadark');closeMobileSidebar()" title="VITA Dark"></span>
+          <span class="mob-swatch" style="background:#a060f0" onclick="setTheme('midnight');closeMobileSidebar()" title="Midnight"></span>
+          <span class="mob-swatch" style="background:#f5a623" onclick="setTheme('solar');closeMobileSidebar()" title="Solar"></span>
+          <span class="mob-swatch" style="background:#0078c8" onclick="setTheme('arctic');closeMobileSidebar()" title="Arctic"></span>
+          <span class="mob-swatch" style="background:#c0622a" onclick="setTheme('linen');closeMobileSidebar()" title="Linen"></span>
+          <span class="mob-swatch" style="background:#4a8a50" onclick="setTheme('sage');closeMobileSidebar()" title="Sage"></span>
+        </div>
+      </div>
       <button class="mob-action-btn" onclick="toggleFocus();closeMobileSidebar()">☯ Modo Foco</button>
       <button class="mob-action-btn" onclick="exportData();closeMobileSidebar()">↓ Exportar</button>
       <button class="mob-action-btn" onclick="document.getElementById('importFile').click();closeMobileSidebar()">↑ Importar</button>
+      <button class="mob-action-btn" onclick="toggleFullscreen();closeMobileSidebar()">⛶ Pantalla completa</button>
     </div>
     <div class="nitem" onclick="showPage('ajustes',this)"><span class="ico">⚙</span>Ajustes</div>
   </div>
@@ -1652,10 +1671,14 @@ function setTheme(name,el){
 }
 function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>toast('⚠ Pantalla completa no disponible','warn'));else document.exitFullscreen();}
 function toggleFocus(){
-  document.body.classList.toggle('focus-mode');
+  const isActive=document.body.classList.toggle('focus-mode');
   const btn=document.getElementById('focus-btn');
-  btn.classList.toggle('active',document.body.classList.contains('focus-mode'));
-  toast(document.body.classList.contains('focus-mode')?'☯ Modo Foco activado':'Modo Foco desactivado','ok');
+  if(btn)btn.classList.toggle('active',isActive);
+  // En mobile mostrar toast con instrucción de cómo salir
+  const fab=document.getElementById('fab-btn');
+  if(fab)fab.style.display=isActive?'none':'flex';
+  const msg=isActive?'☯ Modo Foco — abrí el menú ☰ para salir':'Modo Foco desactivado';
+  toast(msg,'ok');
 }
 
 // ════════════════════════════════════════
@@ -2990,7 +3013,23 @@ document.addEventListener('DOMContentLoaded',()=>{
     ];
     save(d);render();
   }
+  // Double-tap logo = fullscreen en mobile
+  let lastTap=0;
+  const logoWrap=document.getElementById('logo-wrap');
+  if(logoWrap){
+    logoWrap.addEventListener('touchend',function(){
+      const now=Date.now();
+      if(now-lastTap<350){toggleFullscreen();haptic('medium');}
+      lastTap=now;
+    });
+  }
+  // Fix sidebar height for mobile browsers
+  const setSidebarHeight=()=>{
+    const aside=document.querySelector('aside');
+    if(aside&&window.innerWidth<=480)aside.style.height=window.innerHeight+'px';
+  };
+  setSidebarHeight();
+  window.addEventListener('resize',setSidebarHeight);
 });
-</script>
 </body>
 </html>
