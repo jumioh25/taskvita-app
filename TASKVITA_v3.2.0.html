@@ -106,21 +106,22 @@ header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 14p
    LAYOUT
 ════════════════════════════════════ */
 .app{display:grid;grid-template-columns:210px 1fr;flex:1;overflow:hidden}
-aside{background:var(--bg3);border-right:1px solid var(--border);padding:10px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;transition:all .25s}
-.slabel{font-size:9px;letter-spacing:2px;color:var(--text3);padding:10px 8px 4px;text-transform:uppercase}
-.nitem{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text2);border:1px solid transparent;transition:all .15s;user-select:none}
+aside{background:var(--bg3);border-right:1px solid var(--border);padding:10px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:1px;transition:all .25s}
+.slabel{font-size:9px;letter-spacing:2.5px;color:var(--text3);padding:12px 10px 5px;text-transform:uppercase;font-weight:600}
+.nitem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;font-size:13px;color:var(--text2);border:1px solid transparent;transition:all .15s;user-select:none}
 .nitem:hover{background:var(--panel);color:var(--text)}
-.nitem.active{background:var(--accentfill);color:var(--accent);border-color:var(--border)}
+.nitem.active{background:var(--accentfill);color:var(--accent);border-color:rgba(0,229,160,.12);font-weight:500}
 .nitem .ico{font-size:13px;width:18px;text-align:center;flex-shrink:0}
 .nitem.active .ico{filter:drop-shadow(0 0 4px var(--accentglow))}
-.nbadge{margin-left:auto;font-size:10px;background:rgba(0,0,0,0.15);color:var(--accent);padding:1px 6px;border-radius:8px;font-family:'DM Mono',monospace}
-.pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.proj-nav-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text2);border:1px solid transparent;transition:all .15s;user-select:none}
+.nbadge{margin-left:auto;font-size:10px;background:rgba(0,0,0,0.15);color:var(--text3);padding:2px 7px;border-radius:99px;font-family:'DM Mono',monospace;font-weight:500}
+.nitem.active .nbadge{color:var(--accent)}
+.pdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.proj-nav-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:12px;color:var(--text2);border:1px solid transparent;transition:all .15s;user-select:none}
 .proj-nav-item:hover{background:var(--panel);color:var(--text)}
-.proj-nav-item.active{background:var(--accentfill);color:var(--accent);border-color:var(--border)}
+.proj-nav-item.active{background:var(--accentfill);color:var(--accent);border-color:rgba(0,229,160,.12)}
 .proj-nav-item .proj-edit-color{opacity:0;width:12px;height:12px;border-radius:50%;cursor:pointer;border:1px solid var(--border2);flex-shrink:0;transition:opacity .15s}
 .proj-nav-item:hover .proj-edit-color{opacity:1}
-.add-proj-btn{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;font-size:12px;color:var(--text3);border:1px dashed var(--border);background:transparent;width:100%;transition:all .15s;margin-top:4px}
+.add-proj-btn{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;cursor:pointer;font-size:12px;color:var(--text3);border:1px dashed var(--border);background:transparent;width:100%;transition:all .15s;margin-top:4px}
 .add-proj-btn:hover{color:var(--accent);border-color:var(--accent)}
 .sidebar-bottom{margin-top:auto;padding-top:10px;border-top:1px solid var(--border)}
 .mob-actions{display:none;flex-direction:column;gap:4px;padding:8px 0;border-top:1px solid var(--border);margin-top:8px}
@@ -141,10 +142,12 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
    STATS
 ════════════════════════════════════ */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.scard{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:all .2s;cursor:default}
-.scard:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.sval{font-size:22px;font-weight:600;font-family:'DM Mono',monospace}
-.slbl{font-size:10px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.scard{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px 16px;transition:all .2s;cursor:default;position:relative;overflow:hidden}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .2s}
+.scard:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.scard:hover::before{opacity:1}
+.sval{font-size:26px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
+.slbl{font-size:9px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:1.5px;font-weight:500}
 .cat-stats{display:flex;gap:8px;flex-wrap:wrap}
 .cat-stat-chip{display:flex;align-items:center;gap:5px;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--text2)}
 .cat-stat-chip .csval{font-weight:600;color:var(--accent);font-family:'DM Mono',monospace;margin-right:2px}
@@ -159,16 +162,16 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 /* ════════════════════════════════════
    ADD BAR
 ════════════════════════════════════ */
-.addbar{display:flex;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:9px 12px;align-items:center;transition:border-color .2s;flex-wrap:wrap}
-.addbar:focus-within{border-color:var(--border2)}
+.addbar{display:flex;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:10px 14px;align-items:center;transition:all .2s;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.addbar:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentfill),0 2px 8px rgba(0,0,0,.06)}
 .addbar input,.addbar select{background:transparent;border:none;color:var(--text);font-size:13px;outline:none}
 .addbar input{flex:1;min-width:120px}
 .addbar input::placeholder{color:var(--text3)}
 .addbar select{color:var(--text2);font-size:11px;cursor:pointer}
 .addbar select option{background:var(--bg2)}
 .sep{width:1px;height:16px;background:var(--border);flex-shrink:0}
-.addbtn{background:var(--accent);color:var(--bg);border:none;border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;flex-shrink:0;box-shadow:0 0 12px var(--accentglow)}
-.addbtn:hover{background:var(--accent2);box-shadow:0 0 20px var(--accentglow);transform:translateY(-1px)}
+.addbtn{background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;flex-shrink:0;letter-spacing:.3px}
+.addbtn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 16px var(--accentglow)}
 .mic-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
 .mic-btn:hover{border-color:var(--accent);color:var(--accent)}
 .mic-btn.recording{border-color:var(--danger);color:var(--danger);background:var(--dangerglow);animation:pulse-mic .8s ease infinite}
@@ -208,40 +211,43 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 /* ════════════════════════════════════
    LIST VIEW — TASK ITEMS
 ════════════════════════════════════ */
-.cat-group{margin-bottom:6px}
-.cat-group-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;padding:6px 4px 5px;display:flex;align-items:center;gap:6px}
+.cat-group{margin-bottom:8px}
+.cat-group-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:2px;padding:8px 4px 6px;display:flex;align-items:center;gap:8px}
 .cat-group-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.tlist{display:flex;flex-direction:column;gap:3px}
-.titem{background:var(--panel);border:1px solid var(--border);border-radius:10px;transition:all .15s;animation:si .18s ease;user-select:none}
-.titem:hover{border-color:var(--border2)}
-.titem.done>.titem-main .ttxt{text-decoration:line-through;opacity:.5}
+.tlist{display:flex;flex-direction:column;gap:4px}
+.titem{background:var(--panel);border:1px solid var(--border);border-radius:12px;transition:all .2s;animation:si .18s ease;user-select:none;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.titem:hover{border-color:var(--border2);box-shadow:0 4px 12px rgba(0,0,0,.15);transform:translateY(-1px)}
+.titem.done>.titem-main .ttxt{text-decoration:line-through;opacity:.4}
 .titem.drag-ghost{opacity:.4;border:2px dashed var(--accent)}
 .titem.drag-chosen{box-shadow:0 8px 24px rgba(0,0,0,.4)}
 @keyframes si{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.titem-main{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer}
-.tchk{width:17px;height:17px;border:1.5px solid var(--border2);border-radius:5px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all .2s}
-.tchk:hover{border-color:var(--accent)}
-.titem.done .tchk{background:var(--accent);border-color:var(--accent);color:var(--bg);box-shadow:0 0 6px var(--accentglow)}
-.ttxt{flex:1;font-size:13px}
-.ttxt-edit{flex:1;background:transparent;border:none;border-bottom:1px solid var(--accent);color:var(--text);font-size:13px;outline:none;padding:0}
-.badges{display:flex;align-items:center;gap:5px;flex-shrink:0;flex-wrap:wrap}
-.class-badge{font-size:9px;padding:2px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.drag-handle{color:var(--text3);cursor:grab;font-size:11px;padding:4px 3px;flex-shrink:0;opacity:0;transition:opacity .15s;line-height:1;letter-spacing:-1px}
+.titem:hover .drag-handle{opacity:.5}
+.drag-handle:active{cursor:grabbing}
+.titem-main{display:flex;align-items:center;gap:8px;padding:11px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.tchk{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:6px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s}
+.tchk:hover{border-color:var(--accent);background:var(--accentfill)}
+.titem.done .tchk{background:var(--accent);border-color:var(--accent);color:var(--bg);box-shadow:0 0 8px var(--accentglow)}
+.ttxt{flex:1;font-size:13px;line-height:1.4}
+.ttxt-edit{flex:1;background:transparent;border:none;border-bottom:1.5px solid var(--accent);color:var(--text);font-size:13px;outline:none;padding:2px 0}
+.badges{display:flex;align-items:center;gap:4px;flex-shrink:0;flex-wrap:wrap}
+.class-badge{font-size:9px;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;cursor:pointer;transition:opacity .15s}
 .class-badge:hover{opacity:.7}
-.class-proyecto{background:rgba(160,96,240,0.15);color:var(--purple)}
+.class-proyecto{background:rgba(160,96,240,0.12);color:var(--purple)}
 .class-tarea{background:rgba(0,229,160,0.1);color:var(--accent)}
-.class-vencimiento{background:rgba(245,166,35,0.15);color:var(--warn)}
-.class-custom{background:rgba(14,165,233,0.15);color:#0ea5e9}
-.tproj{font-size:10px;padding:2px 7px;border-radius:8px}
+.class-vencimiento{background:rgba(245,166,35,0.12);color:var(--warn)}
+.class-custom{background:rgba(14,165,233,0.12);color:#0ea5e9}
+.tproj{font-size:10px;padding:2px 8px;border-radius:8px;font-weight:500}
 .tdue{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 .tdue.overdue{color:var(--danger)}.tdue.soon{color:var(--warn)}
-.pdot-sm{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.texpand-arrow{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:4px 6px;transition:transform .2s,color .15s;flex-shrink:0;border-radius:5px;display:flex;align-items:center;justify-content:center;width:26px;height:26px}
+.pdot-sm{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.texpand-arrow{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:12px;padding:4px 5px;transition:transform .25s cubic-bezier(.4,0,.2,1),color .15s,background .15s;flex-shrink:0;border-radius:6px;display:flex;align-items:center;justify-content:center;width:26px;height:26px}
 .texpand-arrow:hover{color:var(--accent);background:var(--accentfill)}
 .texpand-arrow.open{transform:rotate(90deg);color:var(--accent)}
-.tdel{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:12px;padding:3px 5px;border-radius:4px;opacity:0;transition:all .15s;flex-shrink:0}
-.titem:hover .tdel{opacity:1}.tdel:hover{color:var(--danger)}
-.recur-badge{font-size:9px;color:var(--text3);padding:1px 5px;border:1px solid var(--border);border-radius:4px}
-.tag-badge{font-size:9px;padding:2px 6px;border-radius:99px;background:var(--accentfill);color:var(--accent);border:1px solid var(--border2)}
+.tdel{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:12px;padding:4px 6px;border-radius:6px;opacity:0;transition:all .15s;flex-shrink:0}
+.titem:hover .tdel{opacity:1}.tdel:hover{color:var(--danger);background:rgba(255,92,122,.1)}
+.recur-badge{font-size:9px;color:var(--text3);padding:2px 6px;border:1px solid var(--border);border-radius:5px}
+.tag-badge{font-size:9px;padding:2px 7px;border-radius:99px;background:var(--accentfill);color:var(--accent);border:1px solid rgba(0,229,160,.2)}
 
 /* Swipe indicator */
 .swipe-action{position:absolute;top:0;bottom:0;width:60px;display:flex;align-items:center;justify-content:center;font-size:18px;border-radius:10px;opacity:0;transition:opacity .2s;pointer-events:none}
@@ -252,11 +258,11 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 /* ════════════════════════════════════
    EXPANDED TASK
 ════════════════════════════════════ */
-.task-expanded{display:none;border-top:1px solid var(--border)}
+.task-expanded{display:none;border-top:1px solid var(--border);background:rgba(0,0,0,.04)}
 .task-expanded.open{display:block}
-.subtasks{padding:8px 12px 4px 36px;display:flex;flex-direction:column;gap:4px}
-.subtask-item{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.1);border:1px solid var(--border);transition:border-color .15s}
-.subtask-item:hover{border-color:var(--border2)}
+.subtasks{padding:10px 14px 6px 40px;display:flex;flex-direction:column;gap:5px}
+.subtask-item{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--border);transition:all .15s}
+.subtask-item:hover{border-color:var(--border2);background:var(--panel)}
 .subtask-item.done .subtask-txt{text-decoration:line-through;opacity:.5}
 .subtask-chk{width:13px;height:13px;border:1.5px solid var(--border2);border-radius:3px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:7px;color:transparent;transition:all .2s}
 .subtask-chk:hover{border-color:var(--accent)}
@@ -719,7 +725,7 @@ footer span{color:var(--accent)}
           <span class="mob-swatch" style="background:#4a8a50" onclick="setTheme('sage');closeMobileSidebar()" title="Sage"></span>
         </div>
       </div>
-      <button class="mob-action-btn" onclick="toggleFocus();closeMobileSidebar()">☯ Modo Foco</button>
+      <button class="mob-action-btn" id="mob-focus-btn" onclick="toggleFocus();closeMobileSidebar()">☯ Modo Foco</button>
       <button class="mob-action-btn" onclick="exportData();closeMobileSidebar()">↓ Exportar</button>
       <button class="mob-action-btn" onclick="document.getElementById('importFile').click();closeMobileSidebar()">↑ Importar</button>
       <button class="mob-action-btn" onclick="toggleFullscreen();closeMobileSidebar()">⛶ Pantalla completa</button>
@@ -1107,16 +1113,17 @@ const VERSIONS=[
     'Botón FAB ➕ flotante en mobile para agregar tarea rápido',
     'Stats grid: 4 columnas en desktop → 2×2 en tablet y mobile',
     'Kanban con scroll horizontal en mobile',
-    'Cards: 1 columna en mobile',
     'Barra de agregar tarea vertical en mobile',
     'Modales full-width en mobile con animación desde abajo',
     'Chips de filtro con scroll horizontal en mobile',
-    'Inputs 16px en mobile — evita zoom en iOS',
     'Haptic feedback — vibración al completar, eliminar y errores',
     'Sidebar se cierra automáticamente al navegar en mobile',
     'Header fijo — siempre visible al scrollear',
-    'Triángulo ▶ de expandir movido al inicio de la tarea — más visible y accesible',
-    'Reducción de espacio vacío en mobile',
+    'Fix expand de tareas — SortableJS ya no bloquea los toques (handle dedicado ⋮⋮)',
+    'Fix Modo Foco — sidebar se abre automáticamente para mostrar el botón de salir',
+    'Acciones mobile en sidebar — Tema, Foco, Exportar, Importar, Pantalla completa',
+    'Favicon T verde sobre fondo oscuro — visible en barra del navegador',
+    'Rediseño visual — tarjetas con hover elevado, stats mejoradas, sidebar más limpio',
     'Soporte ultrawide 21:9 — sidebar 260px, contenido centrado',
   ]},
   {ver:'v3.1.0',date:'2026',label:'Blindaje & Seguridad',changes:[
@@ -1677,11 +1684,19 @@ function toggleFocus(){
   const isActive=document.body.classList.toggle('focus-mode');
   const btn=document.getElementById('focus-btn');
   if(btn)btn.classList.toggle('active',isActive);
-  // En mobile mostrar toast con instrucción de cómo salir
   const fab=document.getElementById('fab-btn');
-  if(fab)fab.style.display=isActive?'none':'flex';
-  const msg=isActive?'☯ Modo Foco — abrí el menú ☰ para salir':'Modo Foco desactivado';
-  toast(msg,'ok');
+  if(fab)fab.style.display=isActive?'none':'';
+  // Cambiar texto del botón en sidebar para que sea obvio cómo salir
+  const mobFocusBtn=document.getElementById('mob-focus-btn');
+  if(mobFocusBtn)mobFocusBtn.textContent=isActive?'✕ Salir del Foco':'☯ Modo Foco';
+  if(isActive&&window.innerWidth<=480){
+    // En mobile abrir sidebar para que el usuario vea el botón de salir
+    setTimeout(()=>{
+      document.querySelector('aside').classList.add('mob-open');
+      document.getElementById('sidebar-overlay').classList.add('open');
+    },400);
+  }
+  toast(isActive?'☯ Foco activado':'☯ Foco desactivado','ok');
 }
 
 // ════════════════════════════════════════
@@ -1897,7 +1912,7 @@ function renderGrouped(cid,tasks,d,enableDrag){
     if(enableDrag&&typeof Sortable!=='undefined'){
       const listEl=document.getElementById(listId);
       if(listEl)sortableInstances.push(new Sortable(listEl,{
-        animation:150,handle:'.titem-main',ghostClass:'drag-ghost',chosenClass:'drag-chosen',
+        animation:150,handle:'.drag-handle',ghostClass:'drag-ghost',chosenClass:'drag-chosen',
         onEnd(evt){reorderTask(evt.item.dataset.id,evt.oldIndex,evt.newIndex,cls);}
       }));
     }
@@ -2076,13 +2091,14 @@ function makeTaskEl(t,d){
   const recurLabel=recurRule?`↻ cada ${recurRule.interval} ${recurRule.unit==='day'?'día(s)':recurRule.unit==='week'?'semana(s)':'mes(es)'}`:null;
   div.innerHTML=`
     <div class="titem-main" onclick="toggleExpand('${t.id}')">
+      <span class="drag-handle" title="Arrastrar">⋮⋮</span>
       <button class="texpand-arrow" id="arr-${t.id}" onclick="event.stopPropagation();toggleExpand('${t.id}')" title="Expandir tarea">▶</button>
       <span class="pdot-sm" style="background:${priColor}"></span>
       <div class="tchk-wrap">
         ${locked?`<div class="lock-tooltip">🔒 Desbloqueá para completar</div>`:''}
         <div class="tchk${t.done?' checked':''}" onclick="event.stopPropagation();toggleTask('${t.id}')">${t.done?'✓':''}</div>
       </div>
-      <span class="ttxt" id="ttxt-${t.id}" ondblclick="event.stopPropagation();startEditTask('${t.id}')">${esc(t.text)}${subTotal?`<span style="font-size:10px;color:var(--text3);margin-left:5px">${subDone}/${subTotal}</span>`:''}</span>
+      <span class="ttxt" id="ttxt-${t.id}" ondblclick="event.stopPropagation();startEditTask('${t.id}')">${esc(t.text)}${subTotal?`<span style="font-size:10px;color:var(--text3);margin-left:6px">${subDone}/${subTotal}</span>`:''}</span>
       <div class="badges">
         ${recurBadge}
         ${recurLabel?`<span class="recur-info-badge">${recurLabel}</span>`:''}
