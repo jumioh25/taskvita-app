@@ -70,7 +70,7 @@ a{color:var(--accent);text-decoration:none}
 /* ════════════════════════════════════
    HEADER
 ════════════════════════════════════ */
-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 14px;height:50px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px;transition:background .3s}
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 14px;height:50px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px;transition:background .3s;position:sticky;top:0;z-index:50}
 .logo{display:flex;align-items:baseline;gap:1px;flex-shrink:0}
 .logo-task{font-size:15px;font-weight:600;color:var(--text)}
 .logo-vita{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--accent);text-shadow:0 0 14px var(--accentglow);letter-spacing:-0.5px}
@@ -225,8 +225,9 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 .tdue{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
 .tdue.overdue{color:var(--danger)}.tdue.soon{color:var(--warn)}
 .pdot-sm{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.texpand-arrow{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:10px;padding:2px 4px;transition:transform .2s;flex-shrink:0}
-.texpand-arrow.open{transform:rotate(90deg)}
+.texpand-arrow{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:4px 6px;transition:transform .2s,color .15s;flex-shrink:0;border-radius:5px;display:flex;align-items:center;justify-content:center;width:26px;height:26px}
+.texpand-arrow:hover{color:var(--accent);background:var(--accentfill)}
+.texpand-arrow.open{transform:rotate(90deg);color:var(--accent)}
 .tdel{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:12px;padding:3px 5px;border-radius:4px;opacity:0;transition:all .15s;flex-shrink:0}
 .titem:hover .tdel{opacity:1}.tdel:hover{color:var(--danger)}
 .recur-badge{font-size:9px;color:var(--text3);padding:1px 5px;border:1px solid var(--border);border-radius:4px}
@@ -568,14 +569,15 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   aside{position:fixed;left:-100%;top:0;height:100vh;z-index:100;width:240px;box-shadow:4px 0 24px rgba(0,0,0,.3);transition:left .25s cubic-bezier(.4,0,.2,1);padding-top:50px}
   aside.mob-open{left:0}
   .sidebar-overlay{display:block}
-  main{padding:10px 12px;padding-bottom:80px}
+  main{padding:8px 10px;padding-bottom:72px}
+  .page{gap:8px!important}
   .stats{grid-template-columns:repeat(2,1fr);gap:8px}
   .stat-card{padding:10px 12px}
   .stat-num{font-size:20px}
   .cat-stats{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
   .cat-stats::-webkit-scrollbar{display:none}
   .cat-chip{flex-shrink:0}
-  .add-bar{flex-direction:column;gap:6px;padding:10px 12px}
+  .add-bar{flex-direction:column;gap:6px;padding:8px 10px}
   .add-bar>input{width:100%;font-size:16px!important;box-sizing:border-box}
   .add-bar>div{display:flex;gap:5px;flex-wrap:wrap;width:100%}
   .add-bar select{flex:1;min-width:85px;font-size:14px!important}
@@ -586,15 +588,16 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   .ttxt{font-size:13px}
   .modal{width:100vw;max-width:100vw;border-radius:16px 16px 0 0;position:fixed;bottom:0;left:0;margin:0;max-height:88vh;overflow-y:auto}
   .overlay{align-items:flex-end;padding:0}
-  .kanban-board{display:flex;overflow-x:auto;gap:10px;padding-bottom:80px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .kanban-board{display:flex;overflow-x:auto;gap:10px;padding-bottom:72px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .kanban-board::-webkit-scrollbar{display:none}
   .kanban-col{min-width:275px;flex-shrink:0}
   input,select,textarea{font-size:16px!important}
-  .phead{flex-direction:column;gap:6px}
+  .phead{flex-direction:column;gap:4px;margin-bottom:4px}
   .phead h2{font-size:17px}
   footer{padding:6px 12px;font-size:10px}
   .srow{flex-direction:column;align-items:flex-start;gap:5px}
-  .ssect{padding:12px}
+  .ssect{padding:10px}
+  .empty-state{padding:20px 16px}
 }
 @media(max-width:360px){
   .gsearch{display:none}
@@ -1053,18 +1056,21 @@ const VERSIONS=[
   {ver:'v3.2.0',date:'2026',current:true,label:'Responsive & Mobile',changes:[
     'Responsive completo — 4 dispositivos: Note 10, iPad Air 4ta gen, Laptop 14", Monitor 21:9',
     'Sidebar auto-colapsable en mobile con botón hamburguesa ☰',
-    'Overlay oscuro al abrir sidebar en mobile — tocar fuera lo cierra',
+    'Overlay oscuro al abrir sidebar — tocar fuera lo cierra',
     'Botón FAB ➕ flotante en mobile para agregar tarea rápido',
     'Stats grid: 4 columnas en desktop → 2×2 en tablet y mobile',
-    'Kanban con scroll horizontal en mobile — una columna a la vez',
+    'Kanban con scroll horizontal en mobile',
     'Cards: 1 columna en mobile',
-    'Barra de agregar tarea vertical en mobile con selects en segunda fila',
+    'Barra de agregar tarea vertical en mobile',
     'Modales full-width en mobile con animación desde abajo',
-    'Chips de filtro con scroll horizontal sin wrap en mobile',
-    'Inputs con font-size 16px en mobile — evita zoom involuntario en iOS',
+    'Chips de filtro con scroll horizontal en mobile',
+    'Inputs 16px en mobile — evita zoom en iOS',
     'Haptic feedback — vibración al completar, eliminar y errores',
     'Sidebar se cierra automáticamente al navegar en mobile',
-    'Soporte ultrawide 21:9 — sidebar 260px, contenido centrado con max-width',
+    'Header fijo — siempre visible al scrollear',
+    'Triángulo ▶ de expandir movido al inicio de la tarea — más visible y accesible',
+    'Reducción de espacio vacío en mobile',
+    'Soporte ultrawide 21:9 — sidebar 260px, contenido centrado',
   ]},
   {ver:'v3.1.0',date:'2026',label:'Blindaje & Seguridad',changes:[
     'Temas Linen (crema/terracota) y Sage (menta/oliva) — total 6 temas',
@@ -1471,8 +1477,16 @@ function closeMobileSidebar(){
   document.getElementById('sidebar-overlay').classList.remove('open');
 }
 function focusAddTask(){
-  const inp=document.querySelector('.add-bar input[type="text"]');
-  if(inp){inp.focus();inp.scrollIntoView({behavior:'smooth',block:'center'});}
+  // Try to find the add input in the current active page
+  const activePg=document.querySelector('.page.active');
+  const inp=activePg?activePg.querySelector('input[type="text"]'):null;
+  const fallback=document.querySelector('.add-bar input[type="text"]');
+  const target=inp||fallback;
+  if(target){
+    target.scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(()=>target.focus(),300);
+  }
+  haptic('light');
 }
 
 // ════════════════════════════════════════
@@ -2011,6 +2025,7 @@ function makeTaskEl(t,d){
   const recurLabel=recurRule?`↻ cada ${recurRule.interval} ${recurRule.unit==='day'?'día(s)':recurRule.unit==='week'?'semana(s)':'mes(es)'}`:null;
   div.innerHTML=`
     <div class="titem-main" onclick="toggleExpand('${t.id}')">
+      <button class="texpand-arrow" id="arr-${t.id}" onclick="event.stopPropagation();toggleExpand('${t.id}')" title="Expandir tarea">▶</button>
       <span class="pdot-sm" style="background:${priColor}"></span>
       <div class="tchk-wrap">
         ${locked?`<div class="lock-tooltip">🔒 Desbloqueá para completar</div>`:''}
@@ -2029,7 +2044,6 @@ function makeTaskEl(t,d){
         ${refs?`<span style="font-size:9px;color:var(--text3)">🔑${refs}</span>`:''}
       </div>
       <button class="lock-btn${locked?' locked':''}" onclick="event.stopPropagation();toggleLock('${t.id}')" title="${locked?'Desbloquear tarea':'Bloquear tarea'}">${locked?'🔒':'🔓'}</button>
-      <span class="texpand-arrow" id="arr-${t.id}">▶</span>
       <button class="tdel" onclick="event.stopPropagation();deleteTask('${t.id}')">✕</button>
     </div>
     <div class="task-expanded" id="exp-${t.id}">
