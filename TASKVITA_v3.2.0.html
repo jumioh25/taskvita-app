@@ -217,6 +217,11 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 .tlist{display:flex;flex-direction:column;gap:4px}
 .titem{background:var(--panel);border:1px solid var(--border);border-radius:12px;transition:all .2s;animation:si .18s ease;user-select:none;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .titem:hover{border-color:var(--border2);box-shadow:0 4px 12px rgba(0,0,0,.15);transform:translateY(-1px)}
+/* Borde izquierdo solo en tareas con subtareas */
+.titem.has-subtasks{border-left:3px solid var(--border2)}
+.titem.has-subtasks.pri-alta{border-left-color:var(--danger)}
+.titem.has-subtasks.pri-baja{border-left-color:var(--text3)}
+.titem.has-subtasks.pri-normal{border-left-color:var(--accent)}
 .titem.done>.titem-main .ttxt{text-decoration:line-through;opacity:.4}
 .titem.drag-ghost{opacity:.4;border:2px dashed var(--accent)}
 .titem.drag-chosen{box-shadow:0 8px 24px rgba(0,0,0,.4)}
@@ -224,13 +229,13 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 .drag-handle{color:var(--text3);cursor:grab;font-size:11px;padding:4px 3px;flex-shrink:0;opacity:0;transition:opacity .15s;line-height:1;letter-spacing:-1px}
 .titem:hover .drag-handle{opacity:.5}
 .drag-handle:active{cursor:grabbing}
-.titem-main{display:flex;align-items:center;gap:8px;padding:11px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.tchk{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:6px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s}
+.titem-main{display:flex;align-items:flex-start;gap:8px;padding:11px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;min-width:0;overflow:hidden}
+.tchk{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:6px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s;margin-top:1px}
 .tchk:hover{border-color:var(--accent);background:var(--accentfill)}
 .titem.done .tchk{background:var(--accent);border-color:var(--accent);color:var(--bg);box-shadow:0 0 8px var(--accentglow)}
-.ttxt{flex:1;font-size:13px;line-height:1.4}
+.ttxt{flex:1;font-size:13px;line-height:1.4;min-width:0;word-break:break-word;overflow-wrap:anywhere}
 .ttxt-edit{flex:1;background:transparent;border:none;border-bottom:1.5px solid var(--accent);color:var(--text);font-size:13px;outline:none;padding:2px 0}
-.badges{display:flex;align-items:center;gap:4px;flex-shrink:0;flex-wrap:wrap}
+.badges{display:flex;align-items:flex-start;gap:4px;flex-shrink:0;flex-wrap:wrap;max-width:50%;justify-content:flex-end}
 .class-badge{font-size:9px;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;cursor:pointer;transition:opacity .15s}
 .class-badge:hover{opacity:.7}
 .class-proyecto{background:rgba(160,96,240,0.12);color:var(--purple)}
@@ -611,7 +616,7 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   aside{position:fixed;left:-100%;top:0;height:100vh;z-index:100;width:240px;box-shadow:4px 0 24px rgba(0,0,0,.3);transition:left .25s cubic-bezier(.4,0,.2,1);padding-top:50px}
   aside.mob-open{left:0}
   .sidebar-overlay{pointer-events:none}
-  main{padding:8px 10px;padding-bottom:72px}
+  main{padding:8px 10px;padding-bottom:90px}
   .page{gap:8px!important}
   .stats{grid-template-columns:repeat(2,1fr);gap:8px}
   .stat-card{padding:10px 12px}
@@ -626,8 +631,9 @@ body.focus-mode main{max-width:700px;margin:0 auto}
   .add-bar .date-btn{display:none}
   .fab{display:flex}
   .card-grid{grid-template-columns:1fr!important}
-  .titem-main{gap:6px;padding:9px 10px}
-  .ttxt{font-size:13px}
+  .titem-main{gap:6px;padding:9px 10px;overflow:hidden}
+  .badges{max-width:48%}
+  .ttxt{font-size:13px;min-width:0;word-break:break-word}
   /* Modal desde abajo */
   .modal{width:100vw;max-width:100vw;border-radius:16px 16px 0 0;position:fixed;bottom:0;left:0;margin:0;max-height:88vh;overflow-y:auto}
   .overlay{align-items:flex-end;padding:0}
@@ -2196,7 +2202,10 @@ function makeTaskWrap(t,d){
 function makeTaskEl(t,d){
   const today=todayStr();
   const div=document.createElement('div');
-  div.className='titem'+(t.done?' done':'')+(isLocked(t)?' locked':'');div.id='task-'+t.id;div.dataset.id=t.id;
+  const hasSubs=(t.subtasks&&t.subtasks.length>0);
+  const priClass=t.priority==='alta'?'pri-alta':t.priority==='baja'?'pri-baja':'pri-normal';
+  div.className='titem'+(t.done?' done':'')+(isLocked(t)?' locked':'')+(hasSubs?' has-subtasks':'')+' '+priClass;
+  div.id='task-'+t.id;div.dataset.id=t.id;
   const proj=t.project?d.projects.find(p=>p.id===t.project):null;
   const priColor=t.priority==='alta'?'var(--danger)':t.priority==='baja'?'var(--text3)':'var(--border2)';
   const classCss=getClassCss(t.class);
