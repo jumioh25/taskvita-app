@@ -236,13 +236,13 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 .drag-handle{color:var(--text3);cursor:grab;font-size:11px;padding:4px 3px;flex-shrink:0;opacity:0;transition:opacity .15s;line-height:1;letter-spacing:-1px}
 .titem:hover .drag-handle{opacity:.5}
 .drag-handle:active{cursor:grabbing}
-.titem-main{display:flex;align-items:flex-start;gap:8px;padding:11px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;min-width:0;overflow:hidden}
+.titem-main{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;min-width:0;overflow:hidden}
 .tchk{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:6px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s;margin-top:1px}
 .tchk:hover{border-color:var(--accent);background:var(--accentfill)}
 .titem.done .tchk{background:var(--accent);border-color:var(--accent);color:var(--bg);box-shadow:0 0 8px var(--accentglow)}
 .ttxt{flex:1;font-size:13px;line-height:1.4;min-width:0;word-break:break-word;overflow-wrap:anywhere;color:var(--text)}
 .ttxt-edit{flex:1;background:transparent;border:none;border-bottom:1.5px solid var(--accent);color:var(--text);font-size:13px;outline:none;padding:2px 0}
-.badges{display:flex;align-items:flex-start;gap:4px;flex-shrink:0;flex-wrap:wrap;max-width:50%;justify-content:flex-end}
+.badges{display:flex;align-items:center;gap:4px;flex-shrink:1;flex-wrap:wrap;margin-left:auto;justify-content:flex-end}
 .class-badge{font-size:9px;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;cursor:pointer;transition:opacity .15s}
 .class-badge:hover{opacity:.7}
 .class-proyecto{background:rgba(160,96,240,0.12);color:var(--purple)}
@@ -357,15 +357,15 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 /* ════════════════════════════════════
    CARD VIEW
 ════════════════════════════════════ */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-.task-card-wrap{perspective:1000px;height:190px;cursor:pointer;transition:transform .2s}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.task-card-wrap{perspective:1000px;height:220px;cursor:pointer;transition:transform .2s}
 .task-card-wrap:hover{transform:translateY(-4px) scale(1.01)}
 .task-card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
 .task-card-wrap.flipped .task-card-inner{transform:rotateY(180deg)}
-.task-card-front,.task-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:18px;border:1px solid var(--border);background:var(--panel);display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.task-card-front,.task-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:18px;border:1px solid var(--border);background:var(--panel);display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);overflow:hidden}
 .task-card-back{transform:rotateY(180deg);background:var(--bg2)}
 .task-card-front:hover{border-color:var(--border2);box-shadow:0 12px 36px rgba(0,0,0,.25)}
-.card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.4;flex:1}
+.card-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.4;flex:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card-title.done-txt{text-decoration:line-through;opacity:.5}
 .card-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-top:auto}
 .card-progress{width:100%;height:4px;background:var(--border);border-radius:99px;overflow:hidden}
@@ -378,7 +378,7 @@ main{overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12
 .card-act.done-act{border-color:var(--accent);color:var(--accent)}
 .card-check{position:absolute;top:10px;right:10px;width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all .2s}
 .task-card-wrap.card-done .card-check{background:var(--accent);border-color:var(--accent);color:var(--bg)}
-.card-zoom-btn{position:absolute;top:10px;left:10px;height:24px;padding:0 8px;border-radius:7px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:10px;display:flex;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:all .15s;z-index:2;font-weight:600}
+.card-zoom-btn{position:absolute;bottom:10px;right:10px;height:24px;padding:0 8px;border-radius:7px;border:1px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:10px;display:flex;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:all .15s;z-index:2;font-weight:600}
 .card-zoom-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accentfill)}
 
 
@@ -601,7 +601,7 @@ body.focus-mode .addbar{margin-bottom:4px}
 /* ════════════════════════════════════════
    MOBILE UX v3.3.3
 ════════════════════════════════════════ */
-.tcontent{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.tcontent{flex:1;min-width:0;display:flex;flex-direction:row;align-items:center;gap:8px}
 .tmore-inline{display:none;font-size:10px;color:var(--accent);font-weight:600;margin-left:6px}
 .bottom-nav{display:none;position:fixed;left:0;right:0;bottom:0;height:64px;background:var(--bg2);border-top:2px solid var(--border2);z-index:120;padding-bottom:env(safe-area-inset-bottom,0);box-shadow:0 -4px 16px rgba(0,0,0,.2)}
 .bottom-nav-inner{height:100%;display:grid;grid-template-columns:repeat(5,1fr);align-items:center}
@@ -2303,12 +2303,11 @@ function makeCard(t,d){
           ${proj?`<span style="font-size:9px;padding:2px 6px;border-radius:6px;background:${softBadgeBg};color:${proj.color};border:1px solid ${softBorder}">${esc(proj.name)}</span>`:''}
           ${effectiveDue?`<span style="font-size:10px;color:${isOverdue?'var(--danger)':'var(--text3)'};font-family:'DM Mono',monospace">📅 ${dueStr}${!t.due?' <span style="font-size:8px;opacity:.6">heredada</span>':''}</span>`:''}
         </div>
-        ${tags?`<div style="display:flex;gap:4px;flex-wrap:wrap">${tags}</div>`:''}
+        ${tags?`<div style="display:flex;gap:4px;flex-wrap:nowrap;overflow:hidden">${tags}</div>`:''}
         ${subs.length?`<div class="card-progress"><div class="card-progress-fill" style="width:${prog}%;background:${softAccent};box-shadow:none"></div></div>`:''}
         <div style="font-size:10px;color:var(--text3)">${subs.length?subDone+'/'+subs.length+' subtareas':''} ${t.attachments?.length?'· 📎 '+t.attachments.length:''}</div>
       </div>
       <div class="task-card-back" style="background:${softBackBg};border:1px solid ${softBorder};border-top:2px solid ${softAccent}">
-        <button class="card-zoom-btn" onclick="event.stopPropagation();openCardZoom('${t.id}')" title="Ampliar">⤢ Ver</button>
         <div class="card-back-title">📝 ${esc(t.text)}</div>
         <div class="card-back-notes">${t.notes?esc(t.notes):'<span style="opacity:.5">Sin notas</span>'}</div>
         <div class="card-back-actions">
